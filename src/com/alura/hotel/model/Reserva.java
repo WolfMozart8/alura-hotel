@@ -30,7 +30,22 @@ public class Reserva {
 		this.valor = valor;
 		this.formaDePago = formaDePago;
 	}
+	public Reserva(int id, LocalDate fechaEntrada, LocalDate fechaSalida, BigDecimal valor,
+			int formaDePago) {
+		this.id = id;
+		this.fechaEntrada = fechaEntrada;
+		this.fechaSalida = fechaSalida;
+		this.valor = valor;
+		this.formaDePago = FormaDePago.obtenerPorIndice(formaDePago);
+	}
 	
+	public Reserva(LocalDate fecha_entrada, LocalDate fecha_salida) {
+		// TODO Auto-generated constructor stub
+		this.fechaEntrada = fecha_entrada;
+		this.fechaSalida = fecha_salida;
+		this.valor = diasValor(fecha_entrada, fecha_salida);
+	}
+
 	public BigDecimal diasValor (LocalDate fechaIn, LocalDate fechaOut) {
 		Long diasDiferencia = ChronoUnit.DAYS.between(fechaIn, fechaOut);
 		BigDecimal valorTotal = new BigDecimal(diasDiferencia).multiply(ReservaValores.getValorDia());

@@ -1,6 +1,8 @@
 package com.alura.hotel.model;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 
 public class ReservaValores {
 
@@ -13,6 +15,12 @@ public class ReservaValores {
 
 	public static void setValorDia(BigDecimal dia) {
 		ReservaValores.valorDia = dia;
+	}
+	
+	public static BigDecimal calcularValor (LocalDate fecha1, LocalDate fecha2) {
+		Long diasDiferencia = ChronoUnit.DAYS.between(fecha1, fecha2);
+		BigDecimal valorTotal = new BigDecimal(diasDiferencia).multiply(valorDia);
+		return valorTotal;
 	}
 	
 	

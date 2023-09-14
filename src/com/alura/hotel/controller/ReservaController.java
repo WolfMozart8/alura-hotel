@@ -4,29 +4,38 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.alura.hotel.dao.HuespedDao;
+import com.alura.hotel.dao.ReservaDao;
 import com.alura.hotel.factory.ConnectionFactory;
 import com.alura.hotel.model.Huesped;
+import com.alura.hotel.model.Reserva;
 
 public class ReservaController {
 
-	private HuespedDao huespedDao;
+	private ReservaDao reservaDao;
 	
 	public ReservaController() {
 		ConnectionFactory factory = new ConnectionFactory();
-		this.huespedDao = new HuespedDao(factory.getConnection());
+		this.reservaDao = new ReservaDao(factory.getConnection());
 	}
 	
-	public void insertar() {
+	public void insertar(Reserva reserva) {
 		//TODO
+		reservaDao.ingresar(reserva);
 	}
-	public void modificar() {
+	public void modificar(Reserva reserva) {
 		//TODO
+		reservaDao.modificar(reserva);
 	}
-	public void eliminar() {
+	public int eliminar(int reservaId) {
 		//TODO
+		return reservaDao.eliminar(reservaId);
 	}
-	public List<Huesped> listar() {
+	public List<Reserva> listar() {
 		//TODO
-		return new ArrayList<>();
+		return reservaDao.listar();
+	}
+	public List<Reserva> buscar(String text) {
+		//TODO
+		return reservaDao.buscar(text);
 	}
 }

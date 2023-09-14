@@ -29,6 +29,20 @@ public class Huesped {
 		this.nacionalidad = nacionalidad;
 		this.telefono = telefono;
 	}
+	
+	
+	
+	public Huesped(Integer id, String nombre, String apellido, LocalDate fechaNacimiento, String nacionalidad,
+			String telefono, Integer reservaId) {
+		super();
+		this.id = id;
+		this.nombre = nombre;
+		this.apellido = apellido;
+		this.fechaNacimiento = fechaNacimiento;
+		this.nacionalidad = nacionalidad;
+		this.telefono = telefono;
+		this.reservaId = reservaId;
+	}
 	public Integer getId() {
 		return id;
 	}
@@ -70,7 +84,7 @@ public class Huesped {
 	}
 	@Override
 	public String toString() {
-		return "Huesped [id=" + id + ", nombre=" + nombre + ", apellido=" + apellido + ", fechaNacimiento="
+		return "Huesped [id=" + id + "\n nombre=" + nombre + ", apellido=" + apellido + ", fechaNacimiento="
 				+ fechaNacimiento + ", nacionalidad=" + nacionalidad + ", telefono=" + telefono + ", reservaId="
 				+ reservaId + "]";
 	}
