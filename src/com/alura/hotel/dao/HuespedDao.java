@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.alura.hotel.factory.ConnectionFactory;
-import com.alura.hotel.model.FormaDePago;
 import com.alura.hotel.model.Huesped;
 import com.alura.hotel.model.Reserva;
 
@@ -89,7 +88,6 @@ public class HuespedDao {
 			}
 			
 		} catch (SQLException e) {
-			// TODO: handle exception
 				throw new RuntimeException(e);	
 		}
 		
@@ -114,7 +112,6 @@ public class HuespedDao {
 			}
 			
 		} catch (SQLException e) {
-			// TODO: handle exception
 			throw new RuntimeException(e);
 		}
 	}
@@ -150,7 +147,6 @@ public class HuespedDao {
 //			connection.close();
 					
 		} catch (SQLException e) {
-			// TODO: handle exception
 			throw new RuntimeException(e);
 		}
 		

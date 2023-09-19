@@ -40,7 +40,6 @@ public class Reserva {
 	}
 	
 	public Reserva(LocalDate fecha_entrada, LocalDate fecha_salida) {
-		// TODO Auto-generated constructor stub
 		this.fechaEntrada = fecha_entrada;
 		this.fechaSalida = fecha_salida;
 		this.valor = diasValor(fecha_entrada, fecha_salida);
@@ -54,7 +53,6 @@ public class Reserva {
 	
 	@Override
 	public String toString() {
-		// TODO Auto-generated method stub
 		return "id: " + this.id + ", ini: " + fechaEntrada + ", fin: " + fechaSalida + ", valor: " + valor + ", pago: " + formaDePago;
 	}
 

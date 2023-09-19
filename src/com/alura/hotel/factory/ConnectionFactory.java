@@ -12,11 +12,16 @@ public class ConnectionFactory {
 	private DataSource dataSource;
 	
 	public ConnectionFactory() {
+		// cambiar por los datos correctos de tu base de datos
+		String url = "jdbc:mysql://localhost/hotel_alura?useTimeZone=true&serverTimeZone=UTC";
+		String user = "root";
+		String password = "root1234";
+		
 		
 		var poolDataSource = new ComboPooledDataSource();
-		poolDataSource.setJdbcUrl("jdbc:mysql://localhost/hotel_alura?useTimeZone=true&serverTimeZone=UTC");
-		poolDataSource.setUser("root");
-		poolDataSource.setPassword("root1234");
+		poolDataSource.setJdbcUrl(url);
+		poolDataSource.setUser(user);
+		poolDataSource.setPassword(password);
 		
 		poolDataSource.setMaxPoolSize(10);
 		

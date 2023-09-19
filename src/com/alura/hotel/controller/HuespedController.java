@@ -14,19 +14,15 @@ public class HuespedController {
 	public HuespedController() {
 		ConnectionFactory factory = new ConnectionFactory();
 		this.huespedDao = new HuespedDao(factory.getConnection());
-//		this.huespedDao = new HuespedDao();
 	}
 	
 	public void insertar(Huesped huesped, Reserva reserva) {
-		//TODO
 		huespedDao.ingresar(huesped, reserva);
 	}
 	public int modificar(Huesped huesped) {
-		//TODO
 		return huespedDao.modificar(huesped);
 	}
 	public int eliminar(int huespedId) {
-		//TODO
 		return huespedDao.eliminar(huespedId);
 	}
 	public List<Huesped> listar(){
