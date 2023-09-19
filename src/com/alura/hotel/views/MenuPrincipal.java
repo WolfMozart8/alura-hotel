@@ -4,10 +4,14 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import com.alura.hotel.factory.ConnectionFactory;
+
 import java.awt.Panel;
 import java.awt.Color;
 import java.awt.SystemColor;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.ImageIcon;
 import java.awt.Font;
 import java.awt.Toolkit;
@@ -15,6 +19,7 @@ import javax.swing.SwingConstants;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
+import java.sql.Connection;
 
 @SuppressWarnings("serial")
 public class MenuPrincipal extends JFrame {
@@ -77,8 +82,8 @@ public class MenuPrincipal extends JFrame {
 		panel.add(panel_1);
 		panel_1.setLayout(null);
 		
-		JLabel lblCopyR = new JLabel("Desarrollado por Fulanita de Tal © 2023");
-		lblCopyR.setBounds(315, 11, 284, 19);
+		JLabel lblCopyR = new JLabel("Desarrollado por Felipe Rios © 2023");
+		lblCopyR.setBounds(315, 11, 400, 19);
 		lblCopyR.setForeground(new Color(240, 248, 255));
 		lblCopyR.setFont(new Font("Roboto", Font.PLAIN, 16));
 		panel_1.add(lblCopyR);
@@ -139,9 +144,21 @@ public class MenuPrincipal extends JFrame {
 		btnLogin.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				Login login = new Login();
-				login.setVisible(true);
-				dispose();
+				
+				// verifica si puede obtener conexion con la base de datos
+				// en caso de tener dificultades de conexion, puede demorar varios segundos
+				try {
+					Connection con =  new ConnectionFactory().getConnection();
+					Login login = new Login();
+					login.setVisible(true);
+					dispose();
+					con.close();
+				} catch (Exception e2) {
+					JOptionPane.showMessageDialog(null, "No se puede conectar a la base de datos");
+					throw new RuntimeException(e2);
+				}
+				
+
 			}
 		});
 		btnLogin.setLayout(null);

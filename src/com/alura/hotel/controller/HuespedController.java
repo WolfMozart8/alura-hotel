@@ -1,6 +1,5 @@
 package com.alura.hotel.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import com.alura.hotel.dao.HuespedDao;

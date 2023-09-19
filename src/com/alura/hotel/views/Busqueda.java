@@ -17,7 +17,6 @@ import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.ImageIcon;
 import java.awt.Color;
-import java.awt.SystemColor;
 import javax.swing.JLabel;
 import java.awt.Font;
 import java.awt.event.ActionListener;
@@ -75,6 +74,7 @@ public class Busqueda extends JFrame {
 		reservaController = new ReservaController();
 		huespedController = new HuespedController();
 
+		// inicia las listas desde la base de datos
 		listaReservas = reservaController.listar();
 		listaHuespedes = huespedController.listar();
 
@@ -243,8 +243,12 @@ public class Busqueda extends JFrame {
 			public void mouseClicked(MouseEvent e) {
 
 				String texto = txtBuscar.getText();
+				
+				
 				if (texto != "") {
+					// cambia las listas y las tablas dependiendo del campo "Buscas"
 
+					
 					if (panel.getSelectedIndex() == 0) {
 						buscarReservasLista(texto);
 					}
@@ -279,6 +283,8 @@ public class Busqueda extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				
+				// si la perstaña seleccionada es "Reservas" (panel-getSelectedIndex() == 0)
 				if (panel.getSelectedIndex() == 0) {
 					int seleccionado = tbReservas.getSelectedRow();
 
@@ -295,6 +301,7 @@ public class Busqueda extends JFrame {
 					resetListaReservas();
 				}
 
+				// si la perstaña seleccionada es "Huespedes" (panel-getSelectedIndex() == 1)
 				if (panel.getSelectedIndex() == 1) {
 
 					int seleccionado = tbHuespedes.getSelectedRow();
@@ -336,7 +343,6 @@ public class Busqueda extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
 				int huespedSeleccionado = tbHuespedes.getSelectedRow();
 
 				if (huespedSeleccionado != -1) {
@@ -344,7 +350,7 @@ public class Busqueda extends JFrame {
 					int huespedEliminado = huespedController.eliminar(selectedColumn);
 					resetListaHuespedes();
 
-					System.out.println(String.format("Se ha eliminado %d huesped/es", huespedEliminado));
+					System.out.println(String.format("Se ha eliminado %d huesped", huespedEliminado));
 
 				}
 				int reservaSeleccionada = tbReservas.getSelectedRow();
@@ -380,6 +386,11 @@ public class Busqueda extends JFrame {
 		this.setLocation(x - xMouse, y - yMouse);
 	}
 
+	/**
+	 * retorna un LocalDate sin importar si el parametro es LocalDate o String
+	 * @param fecha
+	 * @return
+	 */
 	private LocalDate formatearFecha(Object fecha) {
 		if (fecha.getClass() == LocalDate.class) {
 			return (LocalDate) fecha;
@@ -389,24 +400,11 @@ public class Busqueda extends JFrame {
 		}
 	}
 
+	// resetea las listas y las tablas
+	
 	private void resetListaHuespedes() {
 		modeloHuesped.setRowCount(0);
 		listaHuespedes = huespedController.listar();
-
-		for (Huesped huesped : listaHuespedes) {
-			Object[] datosReserva = { huesped.getId(), huesped.getNombre(), huesped.getApellido(),
-					huesped.getFechaNacimiento(), huesped.getNacionalidad(), huesped.getTelefono(),
-					huesped.getReservaId()
-
-			};
-			modeloHuesped.addRow(datosReserva);
-
-		}
-	}
-
-	private void BuscarHuespedLista(String texto) {
-		modeloHuesped.setRowCount(0);
-		listaHuespedes = huespedController.buscar(texto);
 
 		for (Huesped huesped : listaHuespedes) {
 			Object[] datosReserva = { huesped.getId(), huesped.getNombre(), huesped.getApellido(),
@@ -430,6 +428,23 @@ public class Busqueda extends JFrame {
 
 		}
 	}
+	
+	// resetea las listas y las tablas dependiendo del contenido del campo "Buscar" (pasado como parametro)
+	
+	private void BuscarHuespedLista(String texto) {
+		modeloHuesped.setRowCount(0);
+		listaHuespedes = huespedController.buscar(texto);
+		
+		for (Huesped huesped : listaHuespedes) {
+			Object[] datosReserva = { huesped.getId(), huesped.getNombre(), huesped.getApellido(),
+					huesped.getFechaNacimiento(), huesped.getNacionalidad(), huesped.getTelefono(),
+					huesped.getReservaId()
+					
+			};
+			modeloHuesped.addRow(datosReserva);
+			
+		}
+	}
 
 	private void buscarReservasLista(String text) {
 		modelo.setRowCount(0);
@@ -442,12 +457,5 @@ public class Busqueda extends JFrame {
 
 		}
 	}
-//	private Integer formatearInteger (Object numero) {
-//		if (numero.getClass() == Integer.class) {
-//			return (Integer) numero;
-//		} else {
-//			String numeroString = (String) numero;
-//			return LocalDate.parse(fechaString);
-//		}
-//	}
+
 }

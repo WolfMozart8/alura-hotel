@@ -21,12 +21,10 @@ public class HuespedDao {
 		this.connection = con;
 	}
 	public HuespedDao() {
-		// TODO Auto-generated constructor stub
 		ConnectionFactory factory = new ConnectionFactory();
 		this.connection = 	factory.getConnection();	
 
 	}
-	//TODO crear conexion con reserva id
 	public void ingresar(Huesped huesped, Reserva reserva) {
 		try {
 			final PreparedStatement statement = connection.prepareStatement(

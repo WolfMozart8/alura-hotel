@@ -24,11 +24,9 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
-import java.sql.Date;
 import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.time.temporal.TemporalAccessor;
 import java.awt.event.ActionEvent;
 import java.awt.Toolkit;
 import javax.swing.SwingConstants;
@@ -47,7 +45,7 @@ public class RegistroHuesped extends JFrame {
 	private JLabel labelExit;
 	private JLabel labelAtras;
 	int xMouse, yMouse;
-	
+
 	private HuespedController huespedController = new HuespedController();
 
 	/**
@@ -60,6 +58,7 @@ public class RegistroHuesped extends JFrame {
 					// Solo para pruebas
 					Reserva reserva = new Reserva(LocalDate.of(2023, 04, 10), LocalDate.now(),
 							FormaDePago.DINERO_EN_EFECTIVO);
+
 					RegistroHuesped frame = new RegistroHuesped(reserva);
 					frame.setVisible(true);
 				} catch (Exception e) {
@@ -239,9 +238,11 @@ public class RegistroHuesped extends JFrame {
 		contentPane.add(lblNumeroReserva);
 
 		txtNreserva = new JTextField();
-		//agregar la identififacion de la ultima reserva por defecto
-		if (reserva.getId() != null) {
-			txtNreserva.setText(reserva.getId().toString());	
+		// agregar la identififacion de la ultima reserva por defecto
+		if (reserva == null) {
+			txtNreserva.setText("0");
+		} else if (reserva.getId() != null) {
+			txtNreserva.setText(reserva.getId().toString());
 		}
 		txtNreserva.setFont(new Font("Roboto", Font.PLAIN, 16));
 		txtNreserva.setBounds(560, 495, 285, 33);
@@ -322,10 +323,12 @@ public class RegistroHuesped extends JFrame {
 		logo.setIcon(new ImageIcon(RegistroHuesped.class.getResource("/imagenes/Ha-100px.png")));
 
 		JPanel btnexit = new JPanel();
-//		btnexit.setFocusable(true);
-		
+
 		btnexit.setBounds(857, 0, 53, 36);
+		btnexit.setLayout(null);
+		btnexit.setBackground(Color.white);
 		contentPane.add(btnexit);
+		
 		btnexit.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -346,8 +349,6 @@ public class RegistroHuesped extends JFrame {
 				labelExit.setForeground(Color.black);
 			}
 		});
-		btnexit.setLayout(null);
-		btnexit.setBackground(Color.white);
 
 		labelExit = new JLabel("X");
 		labelExit.setBounds(0, 0, 53, 36);
@@ -361,36 +362,36 @@ public class RegistroHuesped extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
-				try{
-					
-				
-				
-				if (!txtNombre.getText().isEmpty() || !txtApellido.getText().isEmpty() || !txtFechaN.getDate().toString().isEmpty()
-						|| !txtTelefono.getText().isEmpty() || !txtNreserva.getText().isEmpty()
-						|| !txtNacionalidad.getSelectedItem().toString().isEmpty()) {
+				// crea y agrega un huesped si los parametros son validos
+				try {
 
-					String nombre = txtNombre.getText();
-					String apellido = txtApellido.getText();
-					String telefono = txtTelefono.getText();
-					String nacionalidad = txtNacionalidad.getSelectedItem().toString();
+					if (!txtNombre.getText().isEmpty() || !txtApellido.getText().isEmpty()
+							|| !txtFechaN.getDate().toString().isEmpty() || !txtTelefono.getText().isEmpty()
+							|| !txtNreserva.getText().isEmpty()
+							|| !txtNacionalidad.getSelectedItem().toString().isEmpty()) {
 
-					SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-					String fechaSelected = dateFormat.format(txtFechaN.getDate());
+						String nombre = txtNombre.getText();
+						String apellido = txtApellido.getText();
+						String telefono = txtTelefono.getText();
+						String nacionalidad = txtNacionalidad.getSelectedItem().toString();
 
-					LocalDate fechaNacimiento = LocalDate.parse(fechaSelected);
+						SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+						String fechaSelected = dateFormat.format(txtFechaN.getDate());
 
-					Huesped huesped = new Huesped(nombre, apellido, fechaNacimiento, nacionalidad, telefono);
+						LocalDate fechaNacimiento = LocalDate.parse(fechaSelected);
 
-					huespedController.insertar(huesped, reserva);
-					System.out.println(huesped.toString());
-					
-					Exito exitoView = new Exito();
-					exitoView.setVisible(true);
-					dispose();
-				} else {
-					JOptionPane.showMessageDialog(null, "Ningun campo debe estar vacío");
-				}
-				}catch (NullPointerException err) {
+						Huesped huesped = new Huesped(nombre, apellido, fechaNacimiento, nacionalidad, telefono);
+
+						huespedController.insertar(huesped, reserva);
+						System.out.println(huesped.toString());
+
+						Exito exitoView = new Exito();
+						exitoView.setVisible(true);
+						dispose();
+					} else {
+						JOptionPane.showMessageDialog(null, "Ningun campo debe estar vacío");
+					}
+				} catch (NullPointerException err) {
 					System.out.println(err);
 					JOptionPane.showMessageDialog(null, "Ningun campo debe estar vacío");
 				}

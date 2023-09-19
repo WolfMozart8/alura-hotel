@@ -14,8 +14,6 @@ import java.awt.Color;
 import javax.swing.JTextField;
 
 import com.alura.hotel.controller.ReservaController;
-import com.alura.hotel.dao.ReservaDao;
-import com.alura.hotel.factory.ConnectionFactory;
 import com.alura.hotel.model.FormaDePago;
 import com.alura.hotel.model.Reserva;
 import com.alura.hotel.model.ReservaValores;
@@ -23,7 +21,6 @@ import com.toedter.calendar.JDateChooser;
 import java.awt.Font;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
-import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
@@ -326,10 +323,18 @@ public class ReservasView extends JFrame {
 		panel.add(txtFormaPago);
 		JButton btnsiguiente = new JButton("SIGUIENTE");
 		
+		btnsiguiente.setLayout(null);
+		btnsiguiente.setBackground(SystemColor.textHighlight);
+		btnsiguiente.setForeground(Color.WHITE);
+		btnsiguiente.setBounds(238, 493, 122, 35);
+		panel.add(btnsiguiente);
+		btnsiguiente.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 		
 		btnsiguiente.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				
+				// crea una reserva y la agrega a la base de datos
 				if (ReservasView.txtFechaEntrada.getDate() != null && ReservasView.txtFechaSalida.getDate() != null) {
 					SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 					String formatDate1 = dateFormat.format(txtFechaEntrada.getDate());
@@ -353,29 +358,26 @@ public class ReservasView extends JFrame {
 				}
 			}
 		});
-		btnsiguiente.setLayout(null);
-		btnsiguiente.setBackground(SystemColor.textHighlight);
-		btnsiguiente.setForeground(Color.WHITE);
-		btnsiguiente.setBounds(238, 493, 122, 35);
-		panel.add(btnsiguiente);
-		btnsiguiente.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
+		JButton btnOmitir = new JButton("OMITIR RESERVA");
 		
-//		txtFechaEntrada.getDateEditor().addPropertyChangeListener(new PropertyChangeListener() {
-//			
-//			@Override
-//			public void propertyChange(PropertyChangeEvent evt) {
-//				// TODO Auto-generated method stub
-//				if (txtFechaEntrada.getDate() != null && txtFechaSalida.getDate() != null) {
-//					txtValor.setText(calcularValorReserva().toString());
-//					System.out.println("si");
-//				}
-//				else {
-//					System.out.println("NONO");
-//				}
-//			}
-//		});
+		btnOmitir.setLayout(null);
+		btnOmitir.setBackground(SystemColor.textHighlight);
+		btnOmitir.setForeground(Color.WHITE);
+		btnOmitir.setBounds(50, 493, 170, 35);
+		panel.add(btnOmitir);
+		btnOmitir.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 		
+		btnOmitir.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// omite la creacion de una reserva y pasa directamente a la seccion de crear huesped
+				RegistroHuesped registroHuesped = new RegistroHuesped(null);
+				registroHuesped.setVisible(true);
+				dispose();
+			}
+		});
 	}
 
 	// Código que permite mover la ventana por la pantalla según la posición de "x"
